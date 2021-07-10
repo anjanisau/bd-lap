@@ -1,0 +1,99 @@
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+> use aks
+switched to db aks
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+> db
+aks
+> db.dropDatabase();
+{ "ok" : 1 }
+> db.Students.insert({_id:1, StudRollNo:'S101', StudName:'Simon David', Grade:'VII', Hobbies:'Net Surfing', DOJ:'10-Oct-2012'});
+WriteResult({ "nInserted" : 1 })
+> show collections
+Students
+> show dbs
+admin   0.000GB
+aks     0.000GB
+config  0.000GB
+local   0.000GB
+> db.Students.insert({_id:2, StudRollNo:'S102', StudName:'Alok Kumar', Grade:'XII', Hobbies:'Hiking', DOJ:'17-March-2000'});
+WriteResult({ "nInserted" : 1 })
+> db.Students.update({},{$set:{Grade:'VIII'}},{multi:true});
+WriteResult({ "nMatched" : 2, "nUpserted" : 0, "nModified" : 2 })
+> db.Students.update({},{$set:{Grade:'VIII', Hobbies:'Ice Skating'}},{multi:true});
+WriteResult({ "nMatched" : 2, "nUpserted" : 0, "nModified" : 2 })
+> db.Students.find({});
+{ "_id" : 1, "StudRollNo" : "S101", "StudName" : "Simon David", "Grade" : "VIII", "Hobbies" : "Ice Skating", "DOJ" : "10-Oct-2012" }
+{ "_id" : 2, "StudRollNo" : "S102", "StudName" : "Alok Kumar", "Grade" : "VIII", "Hobbies" : "Ice Skating", "DOJ" : "17-March-2000" }
+> db.Students.update({StudRollNo:'S102'},{$set:{Grade:'VII', Hobbies:'Ice Skating'}},{multi:true});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.Students.find({});
+{ "_id" : 1, "StudRollNo" : "S101", "StudName" : "Simon David", "Grade" : "VIII", "Hobbies" : "Ice Skating", "DOJ" : "10-Oct-2012" }
+{ "_id" : 2, "StudRollNo" : "S102", "StudName" : "Alok Kumar", "Grade" : "VII", "Hobbies" : "Ice Skating", "DOJ" : "17-March-2000" }
+> db.Students.find({}).pretty();
+{
+	"_id" : 1,
+	"StudRollNo" : "S101",
+	"StudName" : "Simon David",
+	"Grade" : "VIII",
+	"Hobbies" : "Ice Skating",
+	"DOJ" : "10-Oct-2012"
+}
+{
+	"_id" : 2,
+	"StudRollNo" : "S102",
+	"StudName" : "Alok Kumar",
+	"Grade" : "VII",
+	"Hobbies" : "Ice Skating",
+	"DOJ" : "17-March-2000"
+}
+> use Program1
+switched to db Program1
+> db.Person.insert({_id:1, Name:'Alok'});
+WriteResult({ "nInserted" : 1 })
+> db.Food.insert({_id:1, Item:'Laddu'});
+WriteResult({ "nInserted" : 1 })
+> show collections
+Food
+Person
+> show dbs
+Program1  0.000GB
+admin     0.000GB
+aks       0.000GB
+config    0.000GB
+local     0.000GB
+> db.Food.find({_id:0});
+> db.Food.find({_id:1});
+{ "_id" : 1, "Item" : "Laddu" }
+> db.Food.find({});
+{ "_id" : 1, "Item" : "Laddu" }
+> db.Food.find({}, {_id:0});
+{ "Item" : "Laddu" }
+> db.Food.drop();
+true
+> show collections
+Person
+> use aks
+switched to db aks
+> show collections
+Students
+> db.Students.find({});
+> db.createCollection("alok");
+{ "ok" : 1 }
+> show collections
+Students
+alok
+> db.alok.drop();
+true
+> show collections
+Students
+> db.Students.insertMany([{_id: 3, "RollNo": 'S100', "Name": 'Diskha Singh', "Class": 'X', "Hobbie": 'Travelling', 'DOB': '07-November-2000'}, {_id: 2, "RollNo": 'S101', "Name": 'Alok Singh', "Class": 'X', "Hobbie": 'Travelling', 'DOB': '07-November-2000'}]);
+{ "acknowledged" : true, "insertedIds" : [ 3, 2 ] }
+
+
+

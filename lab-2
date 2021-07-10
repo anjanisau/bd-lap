@@ -1,0 +1,154 @@
+ use employee;
+switched to db employee
+> db.createCollection("emp_details");
+{ "ok" : 1 }
+> db.emp_details.insert({_id:1, fname:"alok", lname:"singh", age:"20", gender:"male", dob:"17-03-2000"});
+WriteResult({ "nInserted" : 1 })
+> db.emp_details.insert({_id:2, fname:"diksha", lname:"goyal", age:"20", gender:"female", dob:"12-06-2000"});
+WriteResult({ "nInserted" : 1 })
+> db.emp_details.insert({_id:3, fname:"disha", lname:"sharma", age:"21", gender:"female", dob:"15-07-2000"});
+WriteResult({ "nInserted" : 1 })
+> db.emp_details.insert({_id:4, fname:"abhay", lname:"yalmeli", age:"20", gender:"male", dob:"04-11-2000"});
+WriteResult({ "nInserted" : 1 })
+> db.emp_details.insert({_id:5, fname:"abhishek", lname:"singh", age:"20", gender:"male", dob:"15-10-2000"});
+WriteResult({ "nInserted" : 1 })
+> db.emp_details.insert({_id:6, fname:"garvit", lname:"tanwar", age:"20", gender:"male", dob:"17-05-2000"});
+WriteResult({ "nInserted" : 1 })
+> db.emp_details.insert({_id:7, fname:"harshit", lname:"shukla", age:"20", gender:"male", dob:"18-02-2000"});
+WriteResult({ "nInserted" : 1 })
+> db.emp_details.insert({_id:8, fname:"abhinav", lname:"prakash", age:"20", gender:"male", dob:"19-02-2000"});
+WriteResult({ "nInserted" : 1 })
+> db.emp_details.insert({_id:9, fname:"bharat", lname:"kevinson", age:"20", gender:"male", dob:"28-12-2000"});
+WriteResult({ "nInserted" : 1 })
+> db.emp_details.insert({_id:10, fname:"raghav", lname:"ugli", age:"20", gender:"male", dob:"03-12-2000"});
+WriteResult({ "nInserted" : 1 })
+> db.createCollection("test");
+{ "ok" : 1 }
+> db.test.insertMany([{_id:1, dept:"1", dno:"ise"},{_id:2, dept:"2", dno:"eee"},{_id:3, dept:"3", dno:"cse"}]);
+{ "acknowledged" : true, "insertedIds" : [ 1, 2, 3 ] }
+> db.test.find({}).pretty();
+{ "_id" : 1, "dept" : "1", "dno" : "ise" }
+{ "_id" : 2, "dept" : "2", "dno" : "eee" }
+{ "_id" : 3, "dept" : "3", "dno" : "cse" }
+> db.test.drop();
+true
+> show collections;
+emp_details
+> db.emp_details.find({}).pretty();
+{
+	"_id" : 1,
+	"fname" : "alok",
+	"lname" : "singh",
+	"age" : "20",
+	"gender" : "male",
+	"dob" : "17-03-2000"
+}
+{
+	"_id" : 2,
+	"fname" : "diksha",
+	"lname" : "goyal",
+	"age" : "20",
+	"gender" : "female",
+	"dob" : "12-06-2000"
+}
+{
+	"_id" : 3,
+	"fname" : "disha",
+	"lname" : "sharma",
+	"age" : "21",
+	"gender" : "female",
+	"dob" : "15-07-2000"
+}
+{
+	"_id" : 4,
+	"fname" : "abhay",
+	"lname" : "yalmeli",
+	"age" : "20",
+	"gender" : "male",
+	"dob" : "04-11-2000"
+}
+{
+	"_id" : 5,
+	"fname" : "abhishek",
+	"lname" : "singh",
+	"age" : "20",
+	"gender" : "male",
+	"dob" : "15-10-2000"
+}
+{
+	"_id" : 6,
+	"fname" : "garvit",
+	"lname" : "tanwar",
+	"age" : "20",
+	"gender" : "male",
+	"dob" : "17-05-2000"
+}
+{
+	"_id" : 7,
+	"fname" : "harshit",
+	"lname" : "shukla",
+	"age" : "20",
+	"gender" : "male",
+	"dob" : "18-02-2000"
+}
+{
+	"_id" : 8,
+	"fname" : "abhinav",
+	"lname" : "prakash",
+	"age" : "20",
+	"gender" : "male",
+	"dob" : "19-02-2000"
+}
+{
+	"_id" : 9,
+	"fname" : "bharat",
+	"lname" : "kevinson",
+	"age" : "20",
+	"gender" : "male",
+	"dob" : "28-12-2000"
+}
+{
+	"_id" : 10,
+	"fname" : "raghav",
+	"lname" : "ugli",
+	"age" : "20",
+	"gender" : "male",
+	"dob" : "03-12-2000"
+}
+> 
+db.emp_details.findOne();
+{
+	"_id" : 1,
+	"fname" : "alok",
+	"lname" : "singh",
+	"age" : "20",
+	"gender" : "male",
+	"dob" : "17-03-2000"
+}
+> db.emp_details.find({_id: 2});
+{ "_id" : 2, "fname" : "diksha", "lname" : "goyal", "age" : "20", "gender" : "female", "dob" : "12-06-2000" }
+> db.emp_details.find({age:"20", gender:"male"});
+{ "_id" : 1, "fname" : "alok", "lname" : "singh", "age" : "20", "gender" : "male", "dob" : "17-03-2000" }
+{ "_id" : 4, "fname" : "abhay", "lname" : "yalmeli", "age" : "20", "gender" : "male", "dob" : "04-11-2000" }
+{ "_id" : 5, "fname" : "abhishek", "lname" : "singh", "age" : "20", "gender" : "male", "dob" : "15-10-2000" }
+{ "_id" : 6, "fname" : "garvit", "lname" : "tanwar", "age" : "20", "gender" : "male", "dob" : "17-05-2000" }
+{ "_id" : 7, "fname" : "harshit", "lname" : "shukla", "age" : "20", "gender" : "male", "dob" : "18-02-2000" }
+{ "_id" : 8, "fname" : "abhinav", "lname" : "prakash", "age" : "20", "gender" : "male", "dob" : "19-02-2000" }
+{ "_id" : 9, "fname" : "bharat", "lname" : "kevinson", "age" : "20", "gender" : "male", "dob" : "28-12-2000" }
+{ "_id" : 10, "fname" : "raghav", "lname" : "ugli", "age" : "20", "gender" : "male", "dob" : "03-12-2000" }
+> db.emp_details.save({_id:2, dob:"07-11-2000"});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.emp_details.find({_id: 2});
+{ "_id" : 2, "dob" : "07-11-2000" }
+> db.emp_details.save({_id:2, fname:"diksha", lname:"goyal", age:"20", gender:"female", dob:"07-11-2000"});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.emp_details.find({_id: 2});
+{ "_id" : 2, "fname" : "diksha", "lname" : "goyal", "age" : "20", "gender" : "female", "dob" : "07-11-2000" }
+> db.emp_details.find({$or:[{fname:"harshit"}, {gender:"female"}]});
+{ "_id" : 2, "fname" : "diksha", "lname" : "goyal", "age" : "20", "gender" : "female", "dob" : "07-11-2000" }
+{ "_id" : 3, "fname" : "disha", "lname" : "sharma", "age" : "21", "gender" : "female", "dob" : "15-07-2000" }
+{ "_id" : 7, "fname" : "harshit", "lname" : "shukla", "age" : "20", "gender" : "male", "dob" : "18-02-2000" }
+> 
+
+
+

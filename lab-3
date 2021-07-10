@@ -1,0 +1,16 @@
+db.customer.mapReduce(function(){emit(this.cust_id, this.amount);}, function(key, value){return Array.sum(value)}, {query:{status:"A"}, out:"order_details"});
+{
+	"result" : "order_details",
+	"timeMillis" : 151,
+	"counts" : {
+		"input" : 3,
+		"emit" : 3,
+		"reduce" : 1,
+		"output" : 2
+	},
+	"ok" : 1
+}
+> db.order_details.find({});
+{ "_id" : "A123", "value" : 750 }
+{ "_id" : "B212", "value" : 200 }
+

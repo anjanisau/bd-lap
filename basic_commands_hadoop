@@ -1,0 +1,487 @@
+alok_0276@alok-X406UAR:~$ su hdoop
+Password: 
+bash: export: `HADOOP_OPTS-Djava.library.path=/home/hdoop/hadoop-3.2.1/lib/native': not a valid identifier
+hdoop@alok-X406UAR:/home/alok_0276$ su hdoop
+Password: 
+su: Authentication failure
+hdoop@alok-X406UAR:/home/alok_0276$ su hdoop
+Password: 
+bash: export: `HADOOP_OPTS-Djava.library.path=/home/hdoop/hadoop-3.2.1/lib/native': not a valid identifier
+hdoop@alok-X406UAR:/home/alok_0276$ sudo nano .bashrc
+[sudo] password for hdoop: 
+hdoop@alok-X406UAR:/home/alok_0276$ sudo
+usage: sudo -h | -K | -k | -V
+usage: sudo -v [-AknS] [-g group] [-h host] [-p prompt] [-u user]
+usage: sudo -l [-AknS] [-g group] [-h host] [-p prompt] [-U user] [-u user]
+            [command]
+usage: sudo [-AbEHknPS] [-r role] [-t type] [-C num] [-g group] [-h host] [-p
+            prompt] [-T timeout] [-u user] [VAR=value] [-i|-s] [<command>]
+usage: sudo -e [-AknS] [-r role] [-t type] [-C num] [-g group] [-h host] [-p
+            prompt] [-T timeout] [-u user] file ...
+hdoop@alok-X406UAR:/home/alok_0276$ su hdoop
+Password: 
+bash: export: `HADOOP_OPTS-Djava.library.path=/home/hdoop/hadoop-3.2.1/lib/native': not a valid identifier
+hdoop@alok-X406UAR:/home/alok_0276$ cat .bashrc
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+#shopt -s globstar
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+#force_color_prompt=yes
+
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+	# We have color support; assume it's compliant with Ecma-48
+	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+	# a case would tend to support setf rather than setaf.)
+	color_prompt=yes
+    else
+	color_prompt=
+    fi
+fi
+
+if [ "$color_prompt" = yes ]; then
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+else
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+fi
+unset color_prompt force_color_prompt
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# colored GCC warnings and errors
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+export HADOOP_HOME=/home/hdoop/hadoop-3.2.1
+export HADOOP_INSTALL=$HADOOP_HOME
+export HADOOP_MAPRED_HOME=$HADOOP_HOME
+export HADOOP_COMMON_HOME=$HADOOP_HOME
+export HADOOP_HDFS_HOME=$HADOOP_HOME
+export YARN_HOME=$HADOOP_HOME
+export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
+export PATH=$PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin
+export HADOOP_OPTS"-Djava.library.path=$HADOOP_HOME/lib/native"
+hdoop@alok-X406UAR:/home/alok_0276$ cd ..
+hdoop@alok-X406UAR:/home$ cd ..
+hdoop@alok-X406UAR:/$ ls
+bin    dev   lib    libx32      mnt   root  snap      sys  var
+boot   etc   lib32  lost+found  opt   run   srv       tmp
+cdrom  home  lib64  media       proc  sbin  swapfile  usr
+hdoop@alok-X406UAR:/$ cd home/
+hdoop@alok-X406UAR:/home$ cd hdoop/
+hdoop@alok-X406UAR:~$ cd hadoop-3.2.1/sbin/
+hdoop@alok-X406UAR:~/hadoop-3.2.1/sbin$ ls
+distribute-exclude.sh    start-all.sh         stop-balancer.sh
+FederationStateStore     start-balancer.sh    stop-dfs.cmd
+hadoop-daemon.sh         start-dfs.cmd        stop-dfs.sh
+hadoop-daemons.sh        start-dfs.sh         stop-secure-dns.sh
+httpfs.sh                start-secure-dns.sh  stop-yarn.cmd
+kms.sh                   start-yarn.cmd       stop-yarn.sh
+mr-jobhistory-daemon.sh  start-yarn.sh        workers.sh
+refresh-namenodes.sh     stop-all.cmd         yarn-daemon.sh
+start-all.cmd            stop-all.sh          yarn-daemons.sh
+hdoop@alok-X406UAR:~/hadoop-3.2.1/sbin$ ./start-all.sh
+WARNING: Attempting to start all Apache Hadoop daemons as hdoop in 10 seconds.
+WARNING: This is not a recommended production deployment configuration.
+WARNING: Use CTRL-C to abort.
+Starting namenodes on [localhost]
+Starting datanodes
+Starting secondary namenodes [alok-X406UAR]
+2021-05-23 12:20:41,502 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Starting resourcemanager
+Starting nodemanagers
+hdoop@alok-X406UAR:~/hadoop-3.2.1/sbin$ hadoop fs -ls
+2021-05-23 12:21:06,549 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+ls: `.': No such file or directory
+hdoop@alok-X406UAR:~/hadoop-3.2.1/sbin$ hadoop fs -ls /
+2021-05-23 12:23:24,909 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Found 1 items
+drwxr-xr-x   - hdoop supergroup          0 2021-05-23 12:04 /user
+hdoop@alok-X406UAR:~/hadoop-3.2.1/sbin$ hadoop fs -put /home/alok_0276/abc.txt 
+2021-05-23 12:28:17,526 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+put: `.': No such file or directory: `hdfs://localhost:9000/user/hdoop'
+hdoop@alok-X406UAR:~/hadoop-3.2.1/sbin$ hadoop fs -put /home/alok_0276/abc.txt /
+2021-05-23 12:28:23,869 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+hdoop@alok-X406UAR:~/hadoop-3.2.1/sbin$ hadoop fs -ls /
+2021-05-23 12:28:30,785 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Found 2 items
+-rw-r--r--   1 hdoop supergroup          0 2021-05-23 12:28 /abc.txt
+drwxr-xr-x   - hdoop supergroup          0 2021-05-23 12:04 /user
+hdoop@alok-X406UAR:~/hadoop-3.2.1/sbin$ JPS
+JPS: command not found
+hdoop@alok-X406UAR:~/hadoop-3.2.1/sbin$ jps
+40881 NodeManager
+40517 SecondaryNameNode
+44344 Jps
+40125 NameNode
+40733 ResourceManager
+hdoop@alok-X406UAR:~/hadoop-3.2.1/sbin$ hadoop fs -mkdir -p /user/hdoop
+2021-05-23 12:30:48,199 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+hdoop@alok-X406UAR:~/hadoop-3.2.1/sbin$ hadoop fs -ls
+2021-05-23 12:32:21,502 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+hdoop@alok-X406UAR:~/hadoop-3.2.1/sbin$ hadoop fs -ls/
+2021-05-23 12:32:30,856 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+-ls/: Unknown command
+Usage: hadoop fs [generic options]
+	[-appendToFile <localsrc> ... <dst>]
+	[-cat [-ignoreCrc] <src> ...]
+	[-checksum <src> ...]
+	[-chgrp [-R] GROUP PATH...]
+	[-chmod [-R] <MODE[,MODE]... | OCTALMODE> PATH...]
+	[-chown [-R] [OWNER][:[GROUP]] PATH...]
+	[-copyFromLocal [-f] [-p] [-l] [-d] [-t <thread count>] <localsrc> ... <dst>]
+	[-copyToLocal [-f] [-p] [-ignoreCrc] [-crc] <src> ... <localdst>]
+	[-count [-q] [-h] [-v] [-t [<storage type>]] [-u] [-x] [-e] <path> ...]
+	[-cp [-f] [-p | -p[topax]] [-d] <src> ... <dst>]
+	[-createSnapshot <snapshotDir> [<snapshotName>]]
+	[-deleteSnapshot <snapshotDir> <snapshotName>]
+	[-df [-h] [<path> ...]]
+	[-du [-s] [-h] [-v] [-x] <path> ...]
+	[-expunge [-immediate]]
+	[-find <path> ... <expression> ...]
+	[-get [-f] [-p] [-ignoreCrc] [-crc] <src> ... <localdst>]
+	[-getfacl [-R] <path>]
+	[-getfattr [-R] {-n name | -d} [-e en] <path>]
+	[-getmerge [-nl] [-skip-empty-file] <src> <localdst>]
+	[-head <file>]
+	[-help [cmd ...]]
+	[-ls [-C] [-d] [-h] [-q] [-R] [-t] [-S] [-r] [-u] [-e] [<path> ...]]
+	[-mkdir [-p] <path> ...]
+	[-moveFromLocal <localsrc> ... <dst>]
+	[-moveToLocal <src> <localdst>]
+	[-mv <src> ... <dst>]
+	[-put [-f] [-p] [-l] [-d] <localsrc> ... <dst>]
+	[-renameSnapshot <snapshotDir> <oldName> <newName>]
+	[-rm [-f] [-r|-R] [-skipTrash] [-safely] <src> ...]
+	[-rmdir [--ignore-fail-on-non-empty] <dir> ...]
+	[-setfacl [-R] [{-b|-k} {-m|-x <acl_spec>} <path>]|[--set <acl_spec> <path>]]
+	[-setfattr {-n name [-v value] | -x name} <path>]
+	[-setrep [-R] [-w] <rep> <path> ...]
+	[-stat [format] <path> ...]
+	[-tail [-f] [-s <sleep interval>] <file>]
+	[-test -[defswrz] <path>]
+	[-text [-ignoreCrc] <src> ...]
+	[-touch [-a] [-m] [-t TIMESTAMP ] [-c] <path> ...]
+	[-touchz <path> ...]
+	[-truncate [-w] <length> <path> ...]
+	[-usage [cmd ...]]
+
+Generic options supported are:
+-conf <configuration file>        specify an application configuration file
+-D <property=value>               define a value for a given property
+-fs <file:///|hdfs://namenode:port> specify default filesystem URL to use, overrides 'fs.defaultFS' property from configurations.
+-jt <local|resourcemanager:port>  specify a ResourceManager
+-files <file1,...>                specify a comma-separated list of files to be copied to the map reduce cluster
+-libjars <jar1,...>               specify a comma-separated list of jar files to be included in the classpath
+-archives <archive1,...>          specify a comma-separated list of archives to be unarchived on the compute machines
+
+The general command line syntax is:
+command [genericOptions] [commandOptions]
+
+hdoop@alok-X406UAR:~/hadoop-3.2.1/sbin$ hadoop fs -ls /
+2021-05-23 12:32:37,306 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Found 2 items
+-rw-r--r--   1 hdoop supergroup          0 2021-05-23 12:28 /abc.txt
+drwxr-xr-x   - hdoop supergroup          0 2021-05-23 12:30 /user
+hdoop@alok-X406UAR:~/hadoop-3.2.1/sbin$ hadoop fs -mkdir /user/hdoop/anjali
+2021-05-23 12:32:59,607 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+hdoop@alok-X406UAR:~/hadoop-3.2.1/sbin$ hadoop fs -mkdir /user/hdoop/alok
+2021-05-23 12:33:06,930 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+hdoop@alok-X406UAR:~/hadoop-3.2.1/sbin$ hadoop fs -ls
+2021-05-23 12:33:18,540 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Found 2 items
+drwxr-xr-x   - hdoop supergroup          0 2021-05-23 12:33 alok
+drwxr-xr-x   - hdoop supergroup          0 2021-05-23 12:33 anjali
+hdoop@alok-X406UAR:~/hadoop-3.2.1/sbin$ hadoop fs -touchz /user/hdoop/alok/file1.txt
+2021-05-23 12:37:36,885 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+hdoop@alok-X406UAR:~/hadoop-3.2.1/sbin$ hadoop fs -ls
+2021-05-23 12:37:40,749 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Found 2 items
+drwxr-xr-x   - hdoop supergroup          0 2021-05-23 12:37 alok
+drwxr-xr-x   - hdoop supergroup          0 2021-05-23 12:33 anjali
+hdoop@alok-X406UAR:~/hadoop-3.2.1/sbin$ hadoop fs -touchz /user/hdoop/alok/file2.txt
+2021-05-23 12:37:55,667 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+hdoop@alok-X406UAR:~/hadoop-3.2.1/sbin$ hadoop fs -mkdir /user/hdoop/1nt18is025
+2021-05-23 12:38:23,466 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+hdoop@alok-X406UAR:~/hadoop-3.2.1/sbin$ hadoop fs -ls
+2021-05-23 12:38:40,186 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Found 3 items
+drwxr-xr-x   - hdoop supergroup          0 2021-05-23 12:38 1nt18is025
+drwxr-xr-x   - hdoop supergroup          0 2021-05-23 12:37 alok
+drwxr-xr-x   - hdoop supergroup          0 2021-05-23 12:33 anjali
+hdoop@alok-X406UAR:~/hadoop-3.2.1/sbin$ hadoop fs -mv /user/hdoop/1nt18is025 /user/hdoop/alok
+2021-05-23 12:39:39,968 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+hdoop@alok-X406UAR:~/hadoop-3.2.1/sbin$ hadoop fs -ls /user/hdoop/alok
+2021-05-23 12:40:04,005 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Found 3 items
+drwxr-xr-x   - hdoop supergroup          0 2021-05-23 12:38 /user/hdoop/alok/1nt18is025
+-rw-r--r--   1 hdoop supergroup          0 2021-05-23 12:37 /user/hdoop/alok/file1.txt
+-rw-r--r--   1 hdoop supergroup          0 2021-05-23 12:37 /user/hdoop/alok/file2.txt
+hdoop@alok-X406UAR:~/hadoop-3.2.1/sbin$ gedit alok_1nt18is025.txt
+No protocol specified
+Unable to init server: Could not connect: Connection refused
+
+(gedit:48380): Gtk-WARNING **: 12:40:42.833: cannot open display: :0
+hdoop@alok-X406UAR:~/hadoop-3.2.1/sbin$ cd ..
+hdoop@alok-X406UAR:~/hadoop-3.2.1$ cd ..
+hdoop@alok-X406UAR:~$ cd ..
+hdoop@alok-X406UAR:/home$ cd alok_0276/
+hdoop@alok-X406UAR:/home/alok_0276$ gedit alok_1nt18s025.txt
+No protocol specified
+Unable to init server: Could not connect: Connection refused
+
+(gedit:48717): Gtk-WARNING **: 12:41:50.593: cannot open display: :0
+hdoop@alok-X406UAR:/home/alok_0276$ touch alok_1nt18is025.txt
+touch: cannot touch 'alok_1nt18is025.txt': Permission denied
+hdoop@alok-X406UAR:/home/alok_0276$ cd ..
+hdoop@alok-X406UAR:/home$ cd ..
+hdoop@alok-X406UAR:/$ cd ..
+hdoop@alok-X406UAR:/$ cd ..
+hdoop@alok-X406UAR:/$ cd ~
+hdoop@alok-X406UAR:~$ gedit alok.txt
+No protocol specified
+Unable to init server: Could not connect: Connection refused
+
+(gedit:49025): Gtk-WARNING **: 12:42:51.567: cannot open display: :0
+hdoop@alok-X406UAR:~$ hadoop fs -copyFromLocal abc.txt /user/hdoop/alok/1nt18is025
+2021-05-23 12:43:29,017 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+copyFromLocal: `abc.txt': No such file or directory
+hdoop@alok-X406UAR:~$ hadoop fs -copyFromLocal /home/alok_0276/abc.txt /user/hdoop/alok/1nt18is025
+2021-05-23 12:43:45,404 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+hdoop@alok-X406UAR:~$ hadoop fs -ls /user/hdoop/alok/1nt18is025
+2021-05-23 12:44:43,262 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Found 1 items
+-rw-r--r--   1 hdoop supergroup          0 2021-05-23 12:43 /user/hdoop/alok/1nt18is025/abc.txt
+hdoop@alok-X406UAR:~$ hadoop fs -cat /user/hdoop/alok/1nt18is025/abc.txt
+2021-05-23 12:45:43,006 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+hdoop@alok-X406UAR:~$ hadoop fs -touchz /user/hdoop
+2021-05-23 12:46:23,585 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+touchz: `/user/hdoop': Is a directory
+hdoop@alok-X406UAR:~$ hadoop fs -touchz /user/hdoop/
+2021-05-23 12:46:27,340 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+touchz: `/user/hdoop': Is a directory
+hdoop@alok-X406UAR:~$ hadoop fs -touchz /user/hdoop/empty.txt
+2021-05-23 12:46:45,636 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+hdoop@alok-X406UAR:~$ hadoop fs -ls
+2021-05-23 12:46:51,517 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Found 3 items
+drwxr-xr-x   - hdoop supergroup          0 2021-05-23 12:39 alok
+drwxr-xr-x   - hdoop supergroup          0 2021-05-23 12:33 anjali
+-rw-r--r--   1 hdoop supergroup          0 2021-05-23 12:46 empty.txt
+hdoop@alok-X406UAR:~$ hadoop fs -rm /user/hdoop/anjali
+2021-05-23 12:47:14,569 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+rm: `/user/hdoop/anjali': Is a directory
+hdoop@alok-X406UAR:~$ hadoop fs -rm /user/hdoop/anjali/
+2021-05-23 12:47:17,892 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+rm: `/user/hdoop/anjali': Is a directory
+hdoop@alok-X406UAR:~$ hadoop fs -rmdit /user/hdoop/anjali/
+2021-05-23 12:47:26,277 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+-rmdit: Unknown command
+Usage: hadoop fs [generic options]
+	[-appendToFile <localsrc> ... <dst>]
+	[-cat [-ignoreCrc] <src> ...]
+	[-checksum <src> ...]
+	[-chgrp [-R] GROUP PATH...]
+	[-chmod [-R] <MODE[,MODE]... | OCTALMODE> PATH...]
+	[-chown [-R] [OWNER][:[GROUP]] PATH...]
+	[-copyFromLocal [-f] [-p] [-l] [-d] [-t <thread count>] <localsrc> ... <dst>]
+	[-copyToLocal [-f] [-p] [-ignoreCrc] [-crc] <src> ... <localdst>]
+	[-count [-q] [-h] [-v] [-t [<storage type>]] [-u] [-x] [-e] <path> ...]
+	[-cp [-f] [-p | -p[topax]] [-d] <src> ... <dst>]
+	[-createSnapshot <snapshotDir> [<snapshotName>]]
+	[-deleteSnapshot <snapshotDir> <snapshotName>]
+	[-df [-h] [<path> ...]]
+	[-du [-s] [-h] [-v] [-x] <path> ...]
+	[-expunge [-immediate]]
+	[-find <path> ... <expression> ...]
+	[-get [-f] [-p] [-ignoreCrc] [-crc] <src> ... <localdst>]
+	[-getfacl [-R] <path>]
+	[-getfattr [-R] {-n name | -d} [-e en] <path>]
+	[-getmerge [-nl] [-skip-empty-file] <src> <localdst>]
+	[-head <file>]
+	[-help [cmd ...]]
+	[-ls [-C] [-d] [-h] [-q] [-R] [-t] [-S] [-r] [-u] [-e] [<path> ...]]
+	[-mkdir [-p] <path> ...]
+	[-moveFromLocal <localsrc> ... <dst>]
+	[-moveToLocal <src> <localdst>]
+	[-mv <src> ... <dst>]
+	[-put [-f] [-p] [-l] [-d] <localsrc> ... <dst>]
+	[-renameSnapshot <snapshotDir> <oldName> <newName>]
+	[-rm [-f] [-r|-R] [-skipTrash] [-safely] <src> ...]
+	[-rmdir [--ignore-fail-on-non-empty] <dir> ...]
+	[-setfacl [-R] [{-b|-k} {-m|-x <acl_spec>} <path>]|[--set <acl_spec> <path>]]
+	[-setfattr {-n name [-v value] | -x name} <path>]
+	[-setrep [-R] [-w] <rep> <path> ...]
+	[-stat [format] <path> ...]
+	[-tail [-f] [-s <sleep interval>] <file>]
+	[-test -[defswrz] <path>]
+	[-text [-ignoreCrc] <src> ...]
+	[-touch [-a] [-m] [-t TIMESTAMP ] [-c] <path> ...]
+	[-touchz <path> ...]
+	[-truncate [-w] <length> <path> ...]
+	[-usage [cmd ...]]
+
+Generic options supported are:
+-conf <configuration file>        specify an application configuration file
+-D <property=value>               define a value for a given property
+-fs <file:///|hdfs://namenode:port> specify default filesystem URL to use, overrides 'fs.defaultFS' property from configurations.
+-jt <local|resourcemanager:port>  specify a ResourceManager
+-files <file1,...>                specify a comma-separated list of files to be copied to the map reduce cluster
+-libjars <jar1,...>               specify a comma-separated list of jar files to be included in the classpath
+-archives <archive1,...>          specify a comma-separated list of archives to be unarchived on the compute machines
+
+The general command line syntax is:
+command [genericOptions] [commandOptions]
+
+hdoop@alok-X406UAR:~$ hadoop fs -rmdir /user/hdoop/anjali
+2021-05-23 12:47:34,179 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+hdoop@alok-X406UAR:~$ hadoop fs -ls
+2021-05-23 12:47:41,497 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Found 2 items
+drwxr-xr-x   - hdoop supergroup          0 2021-05-23 12:39 alok
+-rw-r--r--   1 hdoop supergroup          0 2021-05-23 12:46 empty.txt
+hdoop@alok-X406UAR:~$ hadoop fs -copyToLocal /user/hdoop/empty.txt
+2021-05-23 12:48:15,316 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+hdoop@alok-X406UAR:~$ hadoop fs -ls
+2021-05-23 12:49:48,448 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Found 2 items
+drwxr-xr-x   - hdoop supergroup          0 2021-05-23 12:39 alok
+-rw-r--r--   1 hdoop supergroup          0 2021-05-23 12:46 empty.txt
+hdoop@alok-X406UAR:~$ ls
+dfsdata  empty.txt  hadoop-3.2.1  hadoop-3.2.1.tar.gz  tmpdata
+hdoop@alok-X406UAR:~$ gedit empty.txt 
+No protocol specified
+Unable to init server: Could not connect: Connection refused
+
+(gedit:52211): Gtk-WARNING **: 12:51:09.426: cannot open display: :0
+hdoop@alok-X406UAR:~$ nano empty.txt 
+hdoop@alok-X406UAR:~$ cat empty.txt 
+alok
+bcause
+no
+
+hdoop@alok-X406UAR:~$ hadoop fs -cp /user/hdoop/alok/file1.txt /user/hdoop/empty.txt
+2021-05-23 12:52:56,315 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+cp: `/user/hdoop/empty.txt': File exists
+hdoop@alok-X406UAR:~$ hadoop fs -cp /user/hdoop/alok/file1.txt /user/hdoop/file.txt
+2021-05-23 12:53:11,336 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+hdoop@alok-X406UAR:~$ hadoop fs -ls
+2021-05-23 12:53:22,105 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Found 3 items
+drwxr-xr-x   - hdoop supergroup          0 2021-05-23 12:39 alok
+-rw-r--r--   1 hdoop supergroup          0 2021-05-23 12:46 empty.txt
+-rw-r--r--   1 hdoop supergroup          0 2021-05-23 12:53 file.txt
+hdoop@alok-X406UAR:~$ hadopp fs -ls /user/hdoop/aok
+hadopp: command not found
+hdoop@alok-X406UAR:~$ hadopp fs -ls /user/hdoop/alok
+hadopp: command not found
+hdoop@alok-X406UAR:~$ hadoop fs -ls /user/hdoop/alok
+2021-05-23 12:54:02,543 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Found 3 items
+drwxr-xr-x   - hdoop supergroup          0 2021-05-23 12:43 /user/hdoop/alok/1nt18is025
+-rw-r--r--   1 hdoop supergroup          0 2021-05-23 12:37 /user/hdoop/alok/file1.txt
+-rw-r--r--   1 hdoop supergroup          0 2021-05-23 12:37 /user/hdoop/alok/file2.txt
+hdoop@alok-X406UAR:~$ hadoop fs -du -s /user/hdoop/alok/fie1/txt
+2021-05-23 12:54:34,788 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+du: `/user/hdoop/alok/fie1/txt': No such file or directory
+hdoop@alok-X406UAR:~$ hadoop fs -du -s /user/hdoop/alok/file1/txt
+2021-05-23 12:54:39,990 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+^[[Adu: `/user/hdoop/alok/file1/txt': No such file or directory
+hdoop@alok-X406UAR:~$ hadoop fs -du -s /user/hdoop/alok/file1.txt
+2021-05-23 12:54:44,311 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+0  0  /user/hdoop/alok/file1.txt
+hdoop@alok-X406UAR:~$ hadoop fs -du -s /user/hdoop/alok/1nt18is025
+2021-05-23 12:55:13,241 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+0  0  /user/hdoop/alok/1nt18is025
+hdoop@alok-X406UAR:~$ hadoop fs -du -s /user/hdoop/alok
+2021-05-23 12:55:47,817 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+0  0  /user/hdoop/alok
+hdoop@alok-X406UAR:~$ 
+
